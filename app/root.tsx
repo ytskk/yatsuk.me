@@ -1,13 +1,7 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import type {LinksFunction, MetaFunction} from "@remix-run/node";
+import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration,} from "@remix-run/react";
 import tailwindStyles from "./styles/app.css";
+import NavBar from "~/components/NavBar";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -27,7 +21,8 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <NavBar/>
+        <Outlet/>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

@@ -1,32 +1,21 @@
+import Button from "~/components/Button";
+
 export default function Index() {
 	return (
-			<div style={{fontFamily: "system-ui, sans-serif", lineHeight: "1.4"}}>
-				<h1>Welcome to Remix</h1>
-				<ul>
-					<li>
-						<a
-								target="_blank"
-								href="https://remix.run/tutorials/blog"
-								rel="noreferrer"
-						>
-							15m Quickstart Blog Tutorial
-						</a>
-					</li>
-					<li>
-						<a
-								target="_blank"
-								href="https://remix.run/tutorials/jokes"
-								rel="noreferrer"
-						>
-							Deep Dive Jokes App Tutorial
-						</a>
-					</li>
-					<li>
-						<a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-							Remix Docs
-						</a>
-					</li>
-				</ul>
-			</div>
-	);
+			<div className="max-w-3xl mx-auto px-3 md:px-0 py-6">
+				<h1>Title</h1>
+				<h2>Subtitle</h2>
+				<h3>Heading</h3>
+				<h4>Strong</h4>
+				<p>Body</p>
+				<strong>Body Strong</strong>
+				<p className="text-caption">Caption</p>
+				<Button onClick={() => console.log("clicked")} to={""}>
+					Button
+				</Button>
+				{/*<BlockTitle {...blockTitleData} />*/}
+				<h3>
+					<Button to={"/about"}>About {"->"}</Button>
+				</h3>
+			</div>	);
 }
