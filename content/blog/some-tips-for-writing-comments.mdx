@@ -1,0 +1,95 @@
+---
+title: Some tips for writing comments
+createdAt: 2022-05-21
+description: An easy way to improve the writing of comments to make them useful.
+tags:
+- Dart
+- Development
+---
+
+### What comments for?
+
+Comments are for communicating any information to future developers who are either using or maintaining the code, which is not obvious from reading the code.
+
+When writing comments, consider the situations facing a new developer who is unfamiliar with your code, and your present mindset.
+
+Comments should not describe **what** code does (at the same level of abstraction as the code itself), but only **why** it does something.
+
+Don't take this too literally, this is a guideline, if you write a short summary *what* a longer piece of code will do, that may be acceptable. However, comments describing obvious things like "this is an iteration" should be avoided, they don't make the code better readable or understandable, add only clutter, and they violate the DRY principle.
+
+### Some examples
+
+While you're writing code, you're usually juggling a lot of balls in your head, trying to avoid potential pitfalls; and your comments should reflect the things you're juggling, because it's most likely to be information that any future developer will also need to know to avoid making mistakes. For example:
+
+```dart
+/// A user could potentially type an invalid username here but we can't
+/// validate it yet because we need to support the legacy login format.
+```
+
+or
+
+```dart
+/// We don't know whether the server is available yet, but we don't care
+/// until the user does something which involves a message to the server.
+```
+
+or
+
+```dart
+/// Always use the FooFactory for creating Foo objects because it guarantees
+/// they will be initialised using the correct Config.
+```
+
+or
+
+```dart
+/// This calculation is only an approximation until the customer can
+/// supply us with the correct logic, so we know it's wrong, but the
+/// customer confirmed they are happy with it as an interim measure.
+```
+
+or
+
+```dart
+/// HACK: this function fixed a critical fault identified while on XYZ customer site.
+/// This is currently in use by XYZ, it must be refactored into a generic solution ASAP.
+/// see ticket #12345 in the bugtracking system.
+```
+
+or
+
+```dart
+/// This function may fail if VehicleType==Train, but there are currently no
+/// documented requirements or data for Trains, so there's no way to reliably test it.
+```
+
+### When to comment
+
+So when trying to decide what kind of comments to put in your code, take several steps back from the code itself and think about all the problems you've faced, the assumptions you've made, the compromises you've made, etc.
+
+The comments should be a rationale which captures "Why did I write this code in this particular way at this particular time?". The reality is that code is usually never *'finished'*, code tends to evolve constantly, it tends to be constrained by real-world issues (deadlines, customer demands, budget, etc.). so it will always have warts and imperfections which are beyond the developer's control.
+
+Your comments are the best place to document those things - avoid writing long essays, just stick to the minimum amount of information which might warn future developers away from making mistakes, or even just let them know that you've already considered the benefits/limitations of your solution (or even if you've found potential issues with someone else's existing code and haven't been able to fix it).
+
+Professional programmer wouldn't write
+
+```dart
+/// Iterates over the array
+for(int x in ai) { ...
+```
+
+but at most
+
+```dart
+/// Notify all observers…
+for(int x in ai) { ...
+```
+
+or even just
+
+```dart
+notifyObservers()
+```
+
+where the actual code is hidden in a subroutine with a meaningful name.
+
