@@ -25,7 +25,7 @@ class ArticleInteractor {
       ...pageFiles,
     });
 
-    return pageFiles;
+    return compiledPage;
   }
 }
 
