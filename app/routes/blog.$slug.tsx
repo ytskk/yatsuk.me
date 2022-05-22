@@ -6,6 +6,7 @@ import { githubApiProvider } from "~/data/providers/github_provider";
 import { getMDXComponent } from "mdx-bundler/client";
 import { DateUtils } from "../../utils/helpers/date_helper";
 import Button from "~/components/Button";
+import type { MetaFunction } from "@remix-run/react/routeModules";
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!params.slug) {
@@ -20,13 +21,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   return page;
 };
 
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    title: `${data.compiledPage.frontmatter.title} | Yatsuk.me`,
+  };
+};
+
 export default function Article() {
   const data = useLoaderData();
-  // console.log(data);
   const { code, frontmatter, readTime } = data.compiledPage;
-  console.log(code);
-  console.log(frontmatter);
-  console.log(readTime);
   const Component = getMDXComponent(code);
 
   return (
@@ -48,6 +51,17 @@ export default function Article() {
               <Button>{tag}</Button>
             ))}
           </div>
+          {frontmatter.imageUrl && (
+            <div className="cover-image lg:my-8 my-4 lg:h-[28rem] h-[16rem] overflow-hidden rounded-2xl">
+              <img
+                alt=""
+                className="h-full w-full bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${frontmatter.imageUrl})`,
+                }}
+              />
+            </div>
+          )}
         </section>
         <section className={"max-w-3xl prose dark:prose-invert"}>
           <Component />
