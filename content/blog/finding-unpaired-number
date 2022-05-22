@@ -1,0 +1,121 @@
+---
+title: Finding unpaired number
+createdAt: 2022-05-22
+description: Analyzing the ways to search for a unique item in the list.
+tags:
+- Dart
+- Algorithms
+---
+
+Imagine you have a list of elements where each of the have a pair, except one. For example:
+```dart
+const numbers = [3, 8, 2, 3, 1, 2, 8];
+```
+
+In this case we need to get 1, but how to achieve that?
+
+## Primitive way. Count frequencies of each number and select an element with 1 or odd value
+We can use Map to store our elements where key is element and value is frequency.
+
+```dart
+int findUniqueNumberWithMap(List<int> numbers) {
+  Map<int, int> frequencies = {};
+
+  for (int number in numbers) {
+    frequencies[number] = (frequencies[number] ?? 0) + 1;
+  }
+
+  return frequencies.keys.firstWhere(
+    (number) => frequencies[number] == 1,
+    orElse: () => -1,
+  );
+}
+```
+
+### Props
+- It’s universal solution for almost any type and any frequency (even, odd, 1, 2 or any other number)
+
+### Cons
+- Requires Map, which is very expensive. 
+- Needs to store additional collection
+
+### Complexity
+Well, in any case, we run through the whole list, there is nothing to win here. So the time complexity is O(N).
+What about memory usage? We need to maintain Map object that will have N / 2 - 1 keys (In the case of if all elements occur twice). Any way, it’s O(N)
+
+As the result:
+
+| Time   | O(N) |
+|--------|------|
+| Memory | O(N) |
+
+Let’s improve this
+
+## Advanced way. Put elements to the Map is it’s not there and remove if already in.
+We will slightly modify the previous version, sacrificing universality. We'll add an element to the Map if it doesn't exist before, and remove it if it already exists. In this case, after iteration, only one element will remain in the Map, which remains without a pair.
+
+```dart
+int findUniqueNumberWithMapAdvanced(List<int> numbers) {
+  Map<int, int> uniqueNumbers = {};
+
+  for (int number in numbers) {
+    if (uniqueNumbers.containsKey(number)) {
+      uniqueNumbers.remove(number);
+    } else {
+      uniqueNumbers[number] = 1;
+    }
+  }
+
+  return uniqueNumbers.keys.first;
+}
+```
+
+## Props
+- Stores less keys
+
+## Cons
+- Works only with 2, 1 frequency.
+- Memory consumption still depends on the original list.
+
+Complexity
+Same as previous one, but now we store N / 2 - 1 keys in the **worst** case, when only unique numbers came across. And then we will only remove elements.
+
+Better but still
+
+| Time   | O(N) |
+|--------|------|
+| Memory | O(N) |
+
+## Best Practice
+There is a another method to find a unique value from a list. We only need one additional number and that’s it!
+
+```dart
+
+```
+
+What do we have now?
+
+| Time   | O(N) |
+|--------|------|
+| Memory | O(1) |
+
+Excellent solution 🤗
+
+## Bonus way
+A little practice. What is the complexity of this algorithm? How does indexOf work under the hood?
+
+```dart
+int findUniqueNumberWithLoop(List<int> numbers) {
+  for (int number in numbers) {
+    if (numbers.indexOf(number) == numbers.lastIndexOf(number)) {
+      return number;
+    }
+  }
+
+  return -1;
+}
+```
+
+
+
+Good luck 👋
