@@ -1,12 +1,20 @@
 import type { GitHubFile } from "../../../types";
 import { bundleMDX } from "mdx-bundler";
 import calculateReadingTime from "reading-time";
+import type { PluggableList } from "unified";
 
 class MdxCompiler {
+  static readonly remarkPlugins: PluggableList = [];
+
   public async compileMdx<FrontmatterType extends Record<string, unknown>>(
     slug: string,
     githubFiles: Array<GitHubFile>
   ) {
+    const { default: remarkSlug } = await import("remark-slug");
+    const { default: remarkToc } = await import("remark-toc");
+    const { default: remarkPrism } = await import("remark-prism");
+    const { default: gfm } = await import("remark-gfm");
+
     const indexRegex = new RegExp(`${slug}\\/index.mdx?$`);
     const indexFile = githubFiles.find(({ path }) => indexRegex.test(path));
     if (!indexFile) return null;
@@ -28,6 +36,19 @@ class MdxCompiler {
       const { frontmatter, code } = await bundleMDX({
         source: indexFile.content,
         files,
+        mdxOptions(options) {
+          options.remarkPlugins = [
+            ...(options.remarkPlugins ?? []),
+            remarkSlug,
+            remarkToc,
+            gfm,
+            remarkPrism,
+            ...MdxCompiler.remarkPlugins,
+          ];
+          options.rehypePlugins = [...(options.rehypePlugins ?? [])];
+
+          return options;
+        },
       });
       const readTime = calculateReadingTime(indexFile.content);
 

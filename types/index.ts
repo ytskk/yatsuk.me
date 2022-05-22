@@ -24,6 +24,7 @@ type MdxPage = {
   frontmatter: {
     title?: string;
     description?: string;
+    imageUrl?: string;
 
     // Post meta
     categories?: Array<string>;

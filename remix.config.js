@@ -3,6 +3,7 @@
  */
 module.exports = {
   ignoredRouteFiles: ["**/.*"],
+  // serverDependenciesToBundle: ["mdx-bundler", "remark-slug"],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
