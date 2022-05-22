@@ -1,7 +1,7 @@
 class DirectoryList {
-  public static readonly blog = "blog";
+  public static readonly articles = "articles";
 
-  public static directoryList = () => [DirectoryList.blog];
+  public static directoryList = () => [DirectoryList.articles];
 }
 
 export { DirectoryList };

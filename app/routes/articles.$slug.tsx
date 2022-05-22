@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   }
 
   const page = await articleProvider.getArticle({
-    contentDir: DirectoryList.blog,
+    contentDir: DirectoryList.articles,
     slug: params.slug,
   });
 

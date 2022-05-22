@@ -56,7 +56,7 @@ class GithubRepository {
     let files: Array<GitHubFile> = [];
     let entry = mdxFileOrDirectoryPath;
     if (content) {
-      // technically you can get the blog post by adding .mdx at the end... Weird
+      // technically you can get the articles post by adding .mdx at the end... Weird
       // but may as well handle it since that's easy...
       entry = mdxFileOrDirectoryPath.endsWith(".mdx")
         ? mdxFileOrDirectoryPath
